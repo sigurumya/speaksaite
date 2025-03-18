@@ -12,7 +12,7 @@ speaksaite
 │   │   │   └── styles.css
 │   │   ├── js
 │   │   │   └── scripts.js
-│   ├── index.php
+│   ├── index.html
 ├── chat.php
 └── README.md
 ```
