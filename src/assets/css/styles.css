@@ -6,7 +6,8 @@ body {
 }
 
 .container {
-    width: 80%;
+    width: 90%;
+    max-width: 800px;
     margin: auto;
     overflow: hidden;
 }
@@ -46,6 +47,7 @@ body {
 
 .input-area {
     display: flex;
+    flex-direction: column;
     margin-top: 10px;
 }
 
@@ -54,7 +56,7 @@ body {
     padding: 10px;
     border: 1px solid #cccccc;
     border-radius: 5px;
-    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .input-area button {
@@ -68,4 +70,15 @@ body {
 
 .input-area button:hover {
     background: #2c3e50;
+}
+
+@media (min-width: 600px) {
+    .input-area {
+        flex-direction: row;
+    }
+
+    .input-area input {
+        margin-bottom: 0;
+        margin-right: 10px;
+    }
 }
