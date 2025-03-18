@@ -4,13 +4,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const sendButton = document.getElementById('send-button');
     const messagesContainer = document.getElementById('messages-container');
 
-    const socket = new WebSocket('ws://localhost:3000');
-    let messageCount = 0;
-
-    socket.addEventListener('message', function(event) {
-        const data = JSON.parse(event.data);
-        addMessageToChat(data.name, data.message, data.senderClass, data.time, data.count);
-    });
+    function fetchMessages() {
+        fetch('chat.php')
+            .then(response => response.json())
+            .then(data => {
+                messagesContainer.innerHTML = '';
+                data.forEach(message => {
+                    addMessageToChat(message.name, message.message, message.senderClass, message.time, message.count);
+                });
+            });
+    }
 
     sendButton.addEventListener('click', function() {
         const nameText = nameInput.value.trim();
@@ -22,10 +25,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 message: messageText,
                 senderClass: 'user',
                 time: currentTime,
-                count: ++messageCount
+                count: Date.now() // Use timestamp as a unique count
             };
-            socket.send(JSON.stringify(messageData));
-            messageInput.value = '';
+            fetch('chat.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(messageData)
+            }).then(() => {
+                messageInput.value = '';
+                fetchMessages();
+            });
         }
     });
 
@@ -36,4 +47,59 @@ document.addEventListener('DOMContentLoaded', function() {
         messagesContainer.appendChild(messageElement);
         messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll to the bottom
     }
+
+    fetchMessages();
+    setInterval(fetchMessages, 3000); // Fetch new messages every 3 seconds
+});document.addEventListener('DOMContentLoaded', function() {
+    const nameInput = document.getElementById('name-input');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    const messagesContainer = document.getElementById('messages-container');
+
+    function fetchMessages() {
+        fetch('chat.php')
+            .then(response => response.json())
+            .then(data => {
+                messagesContainer.innerHTML = '';
+                data.forEach(message => {
+                    addMessageToChat(message.name, message.message, message.senderClass, message.time, message.count);
+                });
+            });
+    }
+
+    sendButton.addEventListener('click', function() {
+        const nameText = nameInput.value.trim();
+        const messageText = messageInput.value.trim();
+        if (nameText && messageText) {
+            const currentTime = new Date().toLocaleTimeString();
+            const messageData = {
+                name: nameText,
+                message: messageText,
+                senderClass: 'user',
+                time: currentTime,
+                count: Date.now() // Use timestamp as a unique count
+            };
+            fetch('chat.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(messageData)
+            }).then(() => {
+                messageInput.value = '';
+                fetchMessages();
+            });
+        }
+    });
+
+    function addMessageToChat(sender, text, senderClass, time, count) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', senderClass);
+        messageElement.innerHTML = `<strong>${sender}:</strong> ${text} <br><small>${time} (${count}番目)</small>`;
+        messagesContainer.appendChild(messageElement);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll to the bottom
+    }
+
+    fetchMessages();
+    setInterval(fetchMessages, 3000); // Fetch new messages every 3 seconds
 });

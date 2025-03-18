@@ -12,8 +12,8 @@ speaksaite
 │   │   │   └── styles.css
 │   │   ├── js
 │   │   │   └── scripts.js
-│   ├── index.html
-├── server.js
+│   ├── index.php
+├── chat.php
 └── README.md
 ```
 
@@ -27,7 +27,8 @@ cd speaksaite
 
 ## 使用方法
 
-- 名前とメッセージを入力して、リアルタイムでメッセージを送受信できます。
+- 名前とメッセージを入力して、リアルタイムで他のユーザーとメッセージを送受信できます。
+- メッセージには送信時間とメッセージ番号が表示されます。
 - `src/assets/css/styles.css` のスタイルをカスタマイズして、チャットインターフェースの外観を変更できます。
 - `src/assets/js/scripts.js` のJavaScriptを修正して、ユーザーインタラクションやDOM操作を強化できます。
 
