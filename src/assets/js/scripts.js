@@ -1,5 +1,3 @@
-// This file contains the client-side JavaScript code for handling user interactions and DOM manipulation for the conversation website.
-
 document.addEventListener('DOMContentLoaded', function() {
     const messageInput = document.getElementById('message-input');
     const sendButton = document.getElementById('send-button');
