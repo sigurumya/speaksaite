@@ -12,10 +12,8 @@ speaksaite
 │   │   │   └── styles.css
 │   │   ├── js
 │   │   │   └── scripts.js
-│   ├── components
-│   │   └── ChatComponent.js
 │   ├── index.html
-│   └── app.js
+├── server.js
 └── README.md
 ```
 
